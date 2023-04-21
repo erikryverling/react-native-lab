@@ -1,2 +1,3 @@
-# react-native-lab
-💡 React Native learning lab
+# React Native Lab
+
+This is where I play around and learn React Native development
