@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 const styles = StyleSheet.create({
     container: {
@@ -38,11 +42,14 @@ type GreetingProps = {
 }
 
 // Functional component
-const Greeting = (props: GreetingProps) => {
+const Character = (props: GreetingProps) => {
     return (
-        <View style={[styles.item, props.style]}>
+        <TouchableOpacity 
+            style={[styles.item, props.style]} 
+            onPress={props.onNavigate}
+        >
             <Text style={[styles.baseText, {textAlign: 'center'}]}>Hello, {props.name}!</Text>
-        </View>
+        </TouchableOpacity>
     );
 };
 
@@ -72,15 +79,42 @@ class Counter extends Component {
     }
 }
 
+const HomeScreen = ({navigation}) => {
+    return(
+        <View style={[styles.container]}>
+            <Character style={{backgroundColor: 'red'}} name="Cloud" onNavigate = { () => navigation.navigate('Profile', {name: "Cloud"}) } />
+            <Character style={{backgroundColor: 'green'}} name="Tifa" onNavigate = { () => navigation.navigate('Profile', {name: "Tifa"}) } />
+            <Character style={{backgroundColor: 'blue'}} name="Aerith" onNavigate = { () => navigation.navigate('Profile', {name: "Aerith"}) } />
+            <Counter/>
+        </View>
+    )
+}
+
+const ProfileScreen = ({navigation, route}) => {
+    return(
+        <View style={[styles.container]}>
+            <Text style={[styles.baseText, {color: '#333333'}, {textAlign: 'center'}]}>{route.params.name}'s profile</Text>
+        </View>
+    )
+}
+
 class App extends Component {
     render() {
         return(
-            <View style={[styles.container]}>
-                <Greeting style={{backgroundColor: 'red'}} name="Cloud"/>
-                <Greeting style={{backgroundColor: 'green'}} name="Tifa"/>
-                <Greeting style={{backgroundColor: 'blue'}} name="Aerith"/>
-                <Counter/>
-            </View>
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen
+                        name="Home"
+                        component={HomeScreen}
+                        options={{title: 'Home'}}
+                    />
+                    <Stack.Screen 
+                        name="Profile" 
+                        component={ProfileScreen} 
+                        options={{title: 'Profile'}}
+                    />
+                </Stack.Navigator>
+            </NavigationContainer>
         );
     }
 };
