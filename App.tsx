@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React, {Component} from 'react'
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native'
+import {NavigationContainer} from '@react-navigation/native'
+import {createNativeStackNavigator} from '@react-navigation/native-stack'
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator()
 
 const styles = StyleSheet.create({
-    container: {
+    centerContainer: {
         flex: 1,
         justifyContent: 'space-evenly',
         alignItems: 'center',
@@ -14,11 +14,11 @@ const styles = StyleSheet.create({
         gap: 30
     },
 
-    item: {
+    listItem: {
         justifyContent: 'center',
         alignItems: 'center',
         padding: 30,
-        width: '60%'
+        width: '40%'
     },
 
     button: {
@@ -33,25 +33,31 @@ const styles = StyleSheet.create({
         color: '#e6e6e6',
         fontFamily: 'Roboto',
         fontSize: 16,
-    }
-});
+    },
+    
+    titleText: {
+        color: '#333333',
+        fontFamily: 'Roboto',
+        fontSize: 26,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+
+})
 
 type GreetingProps = {
-    name: string;
-    style: Style;
+    name: string
+    style: Style
 }
 
 // Functional component
-const Character = (props: GreetingProps) => {
+const ListItem = (props: GreetingProps) => {
     return (
-        <TouchableOpacity 
-            style={[styles.item, props.style]} 
-            onPress={props.onNavigate}
-        >
-            <Text style={[styles.baseText, {textAlign: 'center'}]}>Hello, {props.name}!</Text>
+        <TouchableOpacity style={[styles.listItem, props.style]} onPress={props.onNavigate}>
+            <Text style={[styles.baseText, {textAlign: 'center'}]}>{props.name}</Text>
         </TouchableOpacity>
-    );
-};
+    )
+}
 
 // Class component
 class Counter extends Component {
@@ -62,8 +68,8 @@ class Counter extends Component {
     onPress = () => {
         this.setState({
             count: this.state.count + 1,
-        });
-    };
+        })
+    }
 
     render() {
         return(
@@ -72,30 +78,53 @@ class Counter extends Component {
                     <Text style={[styles.baseText, {fontWeight: 'bold'}]}>Click me</Text>
                 </TouchableOpacity>
                 <View>
-                    <Text style={[styles.baseText, {color: '#333333'}]}>You clicked {this.state.count} times</Text>
+                    <Text style={[styles.baseText, {color: '#333333'}]}>Click: {this.state.count}</Text>
                 </View>
             </View>
-        );
+        )
     }
 }
 
-const HomeScreen = ({navigation}) => {
-    return(
-        <View style={[styles.container]}>
-            <Character style={{backgroundColor: 'red'}} name="Cloud" onNavigate = { () => navigation.navigate('Profile', {name: "Cloud"}) } />
-            <Character style={{backgroundColor: 'green'}} name="Tifa" onNavigate = { () => navigation.navigate('Profile', {name: "Tifa"}) } />
-            <Character style={{backgroundColor: 'blue'}} name="Aerith" onNavigate = { () => navigation.navigate('Profile', {name: "Aerith"}) } />
-            <Counter/>
-        </View>
-    )
+class HomeScreen extends Component {
+    navigate(name) {
+        this.props.navigation.navigate('Profile', {name: name})
+    }
+
+    render() {
+        return(
+            <View style={[styles.centerContainer]}>
+                <ListItem
+                    style={{backgroundColor: 'red'}} 
+                    name="Cloud" 
+                    onNavigate = {() => this.navigate('Cloud')} />
+
+                <ListItem
+                    style={{backgroundColor: 'green'}} 
+                    name="Tifa" 
+                    onNavigate = {() => this.navigate('Tifa')} />
+
+                <ListItem
+                    style={{backgroundColor: 'blue'}} 
+                    name="Aerith" 
+                    onNavigate = {() => this.navigate('Aerith')} />
+
+                <Counter/>
+
+            </View>
+        )
+    }
 }
 
-const ProfileScreen = ({navigation, route}) => {
-    return(
-        <View style={[styles.container]}>
-            <Text style={[styles.baseText, {color: '#333333'}, {textAlign: 'center'}]}>{route.params.name}'s profile</Text>
-        </View>
-    )
+class ProfileScreen extends Component {
+    render() {
+        return(
+            <View style={[styles.centerContainer]}>
+                <Text style={styles.titleText}>
+                    {this.props.route.params.name}'s profile
+                </Text>
+            </View>
+        )
+    }
 }
 
 class App extends Component {
@@ -115,8 +144,8 @@ class App extends Component {
                     />
                 </Stack.Navigator>
             </NavigationContainer>
-        );
+        )
     }
-};
+}
 
-export default App;
+export default App
