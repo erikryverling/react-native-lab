@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native'
+import {View, StyleSheet, TouchableOpacity, FlatList, Text} from 'react-native'
 import {NavigationContainer} from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 
@@ -11,14 +11,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         alignItems: 'center',
         padding: 30,
-        gap: 30
     },
 
     listItem: {
-        justifyContent: 'center',
-        alignItems: 'center',
         padding: 30,
-        width: '40%'
     },
 
     button: {
@@ -34,7 +30,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto',
         fontSize: 16,
     },
-    
+
     titleText: {
         color: '#333333',
         fontFamily: 'Roboto',
@@ -93,23 +89,22 @@ class HomeScreen extends Component {
     render() {
         return(
             <View style={[styles.centerContainer]}>
-                <ListItem
-                    style={{backgroundColor: 'red'}} 
-                    name="Cloud" 
-                    onNavigate = {() => this.navigate('Cloud')} />
-
-                <ListItem
-                    style={{backgroundColor: 'green'}} 
-                    name="Tifa" 
-                    onNavigate = {() => this.navigate('Tifa')} />
-
-                <ListItem
-                    style={{backgroundColor: 'blue'}} 
-                    name="Aerith" 
-                    onNavigate = {() => this.navigate('Aerith')} />
-
+                <FlatList
+                    data={[
+                        {name: 'Cloud', color: 'red'},
+                        {name: 'Tifa', color: 'green'},
+                        {name: 'Aerith', color: 'blue'}
+                    ]}
+                    renderItem={
+                        ({item}) =>
+                            <ListItem
+                                style={{backgroundColor: item.color}} 
+                                name={item.name} 
+                                onNavigate = {() => this.navigate(item.name)} />
+                        }
+                    contentContainerStyle={styles.centerContainer}
+                   />
                 <Counter/>
-
             </View>
         )
     }
