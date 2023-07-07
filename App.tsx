@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import {View, StyleSheet, TouchableOpacity, FlatList, Text} from 'react-native'
+import React, {Component, useState, useEffect} from 'react'
+import {View, StyleSheet, TouchableOpacity, FlatList, Text, ActivityIndicator} from 'react-native'
 import {NavigationContainer} from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 
@@ -110,16 +110,45 @@ class HomeScreen extends Component {
     }
 }
 
-class ProfileScreen extends Component {
-    render() {
-        return(
-            <View style={[styles.centerContainer]}>
-                <Text style={styles.titleText}>
-                    {this.props.route.params.name}'s profile
-                </Text>
-            </View>
-        )
+type ProfileScreenProps = {
+    navigation: Navigation,
+}
+
+type Temp = {
+    temp: string
+}
+
+const ProfileScreen = (props: ProfileScreenProps) => {
+    const [isLoading, setLoading] = useState(true);
+    const [data, setData] = useState<Temp[]>([]);
+
+    useEffect(() => {getTemp()}, [])
+
+    const getTemp = async () => {
+        try {
+            const appId = "" // Insert id here
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?appid=${appId}&lon=18.0273&lat=59.303&units=metric&lang=sv`)
+            const json = await response.json()
+            setData(json.main.temp)
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setLoading(false)
+        }
     }
+
+    return(
+        <View style={[styles.centerContainer, {justifyContent: 'center'}]}>
+            {
+                isLoading ? (<ActivityIndicator/>) :
+                    (
+                        <Text style={styles.titleText}>
+                            {props.route.params.name}'s profile | {Math.round(data)} ° C
+                        </Text>
+                    )
+            }
+        </View>
+    )
 }
 
 class App extends Component {
@@ -132,9 +161,9 @@ class App extends Component {
                         component={HomeScreen}
                         options={{title: 'Home'}}
                     />
-                    <Stack.Screen 
-                        name="Profile" 
-                        component={ProfileScreen} 
+                    <Stack.Screen
+                        name="Profile"
+                        component={ProfileScreen}
                         options={{title: 'Profile'}}
                     />
                 </Stack.Navigator>
