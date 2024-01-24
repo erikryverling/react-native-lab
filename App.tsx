@@ -1,4 +1,5 @@
 import React, {Component, useState, useEffect} from 'react';
+
 import {
   View,
   StyleSheet,
@@ -7,39 +8,53 @@ import {
   Text,
   ActivityIndicator,
 } from 'react-native';
+
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
+import {SPACING} from './Theme';
+import {MD3LightTheme as DefaultTheme, PaperProvider} from 'react-native-paper';
+import lightTheme from './light-theme.json';
+import {createMaterialBottomTabNavigator} from 'react-native-paper/react-navigation';
+
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 const Stack = createNativeStackNavigator();
+const Tab = createMaterialBottomTabNavigator();
+
+const theme = {
+  ...DefaultTheme,
+  colors: lightTheme.colors, // Copy it from the color codes scheme and then use it here
+};
 
 const styles = StyleSheet.create({
   centerContainer: {
     flex: 1,
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    padding: 30,
+    padding: SPACING.large,
   },
 
   listItem: {
-    padding: 30,
+    padding: SPACING.large,
   },
 
   button: {
     alignItems: 'center',
-    backgroundColor: '#4f99ad',
+    backgroundColor: theme.colors.primary,
     width: 300,
-    padding: 15,
+    padding: SPACING.default,
     marginBottom: 10,
   },
 
   baseText: {
-    color: '#e6e6e6',
+    color: theme.colors.onPrimary,
     fontFamily: 'Roboto',
     fontSize: 16,
   },
 
   titleText: {
-    color: '#333333',
+    color: theme.colors.onBackground,
     fontFamily: 'Roboto',
     fontSize: 26,
     fontWeight: 'bold',
@@ -105,11 +120,7 @@ class HomeScreen extends Component {
             {name: 'Aerith', color: 'blue'},
           ]}
           renderItem={({item}) => (
-            <ListItem
-              style={{backgroundColor: item.color}}
-              name={item.name}
-              onNavigate={() => this.navigate(item.name)}
-            />
+            <ListItem style={{backgroundColor: item.color}} name={item.name} />
           )}
           contentContainerStyle={styles.centerContainer}
         />
@@ -118,16 +129,11 @@ class HomeScreen extends Component {
     );
   }
 }
-
-type ProfileScreenProps = {
-  navigation: Navigation;
-};
-
 type Temp = {
   temp: string;
 };
 
-const ProfileScreen = (props: ProfileScreenProps) => {
+const ProfileScreen = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState<Temp[]>([]);
 
@@ -155,9 +161,7 @@ const ProfileScreen = (props: ProfileScreenProps) => {
       {isLoading ? (
         <ActivityIndicator />
       ) : (
-        <Text style={styles.titleText}>
-          {props.route.params.name}'s profile | {Math.round(data)} ° C
-        </Text>
+        <Text style={styles.titleText}>{Math.round(data)} ° C</Text>
       )}
     </View>
   );
@@ -166,20 +170,40 @@ const ProfileScreen = (props: ProfileScreenProps) => {
 class App extends Component {
   render() {
     return (
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{title: 'Home'}}
-          />
-          <Stack.Screen
-            name="Profile"
-            component={ProfileScreen}
-            options={{title: 'Profile'}}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <PaperProvider theme={theme}>
+        <NavigationContainer>
+          <Tab.Navigator>
+            <Tab.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{
+                title: 'Home',
+                tabBarLabel: 'Home',
+                tabBarIcon: ({color}) => (
+                  // TODO Magic number
+                  <MaterialCommunityIcons name="home" color={color} size={26} />
+                ),
+              }}
+            />
+            <Tab.Screen
+              name="Weather"
+              component={ProfileScreen}
+              options={{
+                title: 'Weather',
+                tabBarLabel: 'Weather',
+                tabBarIcon: ({color}) => (
+                  <MaterialCommunityIcons
+                    name="weather-partly-cloudy"
+                    color={color}
+                    // TODO Magic number
+                    size={26}
+                  />
+                ),
+              }}
+            />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
     );
   }
 }
