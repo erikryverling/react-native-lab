@@ -1,32 +1,37 @@
-import React, {Component, useState, useEffect} from 'react';
+import React, {Component} from 'react';
 
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  FlatList,
-  Text,
-  ActivityIndicator,
-} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {SPACING} from './Theme';
-import {MD3LightTheme as DefaultTheme, PaperProvider} from 'react-native-paper';
+import {
+  configureFonts,
+  MD3LightTheme as DefaultTheme,
+  PaperProvider,
+} from 'react-native-paper';
 import lightTheme from './light-theme.json';
 import {createMaterialBottomTabNavigator} from 'react-native-paper/react-navigation';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import conf from './conf.json';
+import {Text} from 'react-native-paper';
+import WeatherScreen from './WeatherScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
-const theme = {
+const fontConfig = {
+  displayMedium: {
+    fontFamily: 'Vidaloka',
+  },
+};
+
+export const theme = {
   ...DefaultTheme,
-  colors: lightTheme.colors, // Copy it from the color codes scheme and then use it here
+  colors: lightTheme.colors,
+  fonts: configureFonts({config: fontConfig}),
 };
 
 const styles = StyleSheet.create({
@@ -53,14 +58,6 @@ const styles = StyleSheet.create({
     color: theme.colors.onPrimary,
     fontFamily: 'Roboto',
     fontSize: 16,
-  },
-
-  titleText: {
-    color: theme.colors.onBackground,
-    fontFamily: 'Roboto',
-    fontSize: 26,
-    fontWeight: 'bold',
-    textAlign: 'center',
   },
 });
 
@@ -131,43 +128,6 @@ class HomeScreen extends Component {
     );
   }
 }
-type Temp = {
-  temp: string;
-};
-
-const ProfileScreen = () => {
-  const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState<Temp[]>([]);
-
-  useEffect(() => {
-    getTemp();
-  }, []);
-
-  const getTemp = async () => {
-    try {
-      const appId = conf.apiKey;
-      const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?appid=${appId}&lon=18.0273&lat=59.303&units=metric&lang=sv`,
-      );
-      const json = await response.json();
-      setData(json.main.temp);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <View style={[styles.centerContainer, {justifyContent: 'center'}]}>
-      {isLoading ? (
-        <ActivityIndicator />
-      ) : (
-        <Text style={styles.titleText}>{Math.round(data)} ° C</Text>
-      )}
-    </View>
-  );
-};
 
 class App extends Component {
   render() {
@@ -189,7 +149,7 @@ class App extends Component {
             />
             <Tab.Screen
               name="Weather"
-              component={ProfileScreen}
+              component={WeatherScreen}
               options={{
                 title: 'Weather',
                 tabBarLabel: 'Weather',
