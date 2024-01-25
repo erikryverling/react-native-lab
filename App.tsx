@@ -19,6 +19,8 @@ import {createMaterialBottomTabNavigator} from 'react-native-paper/react-navigat
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import conf from './conf.json';
+
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
@@ -143,7 +145,7 @@ const ProfileScreen = () => {
 
   const getTemp = async () => {
     try {
-      const appId = ''; // TODO Put in some config file and exclude from project...
+      const appId = conf.apiKey;
       const response = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?appid=${appId}&lon=18.0273&lat=59.303&units=metric&lang=sv`,
       );
