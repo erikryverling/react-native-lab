@@ -2,25 +2,23 @@ import React, {useEffect, useState} from 'react';
 import conf from './conf.json';
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-paper';
-import {SPACING} from './Theme';
 import {theme} from './App';
-
-const styles = StyleSheet.create({
-  centerContainer: {
-    flex: 1,
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    padding: SPACING.large,
-  },
-});
+import {styles} from './App';
+import {Float} from 'react-native/Libraries/Types/CodegenTypes';
 
 type Response = {
   name: string;
   main: Main;
+  wind: Wind;
 };
 
 type Main = {
   temp: string;
+};
+
+type Wind = {
+  speed: Float;
+  deg: Float;
 };
 
 const WeatherScreen = () => {
@@ -51,14 +49,29 @@ const WeatherScreen = () => {
       {isLoading ? (
         <ActivityIndicator />
       ) : (
-        <View>
-          <Text variant="titleLarge">{response.name}</Text>
-
+        <View
+          style={{
+            justifyContent: 'space-between',
+            width: 170,
+            height: 150,
+          }}>
+          <Text style={{textAlign: 'center'}} variant="titleLarge">
+            {response.name}
+          </Text>
           <Text
+            style={{textAlign: 'center'}}
             variant="displayMedium"
             theme={{colors: {onSurface: theme.colors.primary}}}>
             {Math.round(response.main.temp)} ° C
           </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}>
+            <Text variant="titleLarge">{response.wind.speed} m/s</Text>
+            <Text variant="titleLarge">{response.wind.deg} °</Text>
+          </View>
         </View>
       )}
     </View>

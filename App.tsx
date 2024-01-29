@@ -28,13 +28,14 @@ const fontConfig = {
   },
 };
 
+// TODO Put somewhere else?
 export const theme = {
   ...DefaultTheme,
   colors: lightTheme.colors,
   fonts: configureFonts({config: fontConfig}),
 };
-
-const styles = StyleSheet.create({
+// TODO Put somewhere else?
+export const styles = StyleSheet.create({
   centerContainer: {
     flex: 1,
     justifyContent: 'space-evenly',
