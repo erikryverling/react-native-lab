@@ -1,27 +1,16 @@
+import secrets from '../secrets/secrets.json';
 import React, {useEffect, useState} from 'react';
-import conf from './conf.json';
-import {ActivityIndicator, StyleSheet, View} from 'react-native';
+import {ActivityIndicator, View} from 'react-native';
+
 import {Text} from 'react-native-paper';
-import {theme} from './App';
-import {styles} from './App';
-import {Float} from 'react-native/Libraries/Types/CodegenTypes';
+import {withTheme} from 'react-native-paper';
+import {makeAppStyles} from '../styles/styles';
 
-type Response = {
-  name: string;
-  main: Main;
-  wind: Wind;
-};
+import {Response} from '../models/WeatherResponse';
 
-type Main = {
-  temp: string;
-};
+const WeatherScreen = ({theme}) => {
+  const appStyles = makeAppStyles(theme.colors);
 
-type Wind = {
-  speed: Float;
-  deg: Float;
-};
-
-const WeatherScreen = () => {
   const [isLoading, setLoading] = useState(true);
   const [response, setResponse] = useState<Response[]>([]);
 
@@ -29,9 +18,10 @@ const WeatherScreen = () => {
     getTemp();
   }, []);
 
+  // TODO Break out?
   const getTemp = async () => {
     try {
-      const appId = conf.apiKey;
+      const appId = secrets.apiKey;
       const response = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?appid=${appId}&lon=18.0273&lat=59.303&units=metric&lang=sv`,
       );
@@ -45,7 +35,7 @@ const WeatherScreen = () => {
   };
 
   return (
-    <View style={[styles.centerContainer, {justifyContent: 'center'}]}>
+    <View style={[appStyles.centerContainer, {justifyContent: 'center'}]}>
       {isLoading ? (
         <ActivityIndicator />
       ) : (
@@ -78,4 +68,4 @@ const WeatherScreen = () => {
   );
 };
 
-export default WeatherScreen;
+export default withTheme(WeatherScreen);

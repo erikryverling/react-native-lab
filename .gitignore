@@ -63,4 +63,4 @@ yarn-error.log
 .metro-health-check*
 
 # Custom conf file
-conf.json
+src/secrets/secrets.json
