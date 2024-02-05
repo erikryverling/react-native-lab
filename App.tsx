@@ -1,13 +1,8 @@
 import React, {Component} from 'react';
 
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import {
-  configureFonts,
-  MD3LightTheme as DefaultTheme,
-  PaperProvider,
-} from 'react-native-paper';
+import {MD3LightTheme as DefaultTheme, PaperProvider} from 'react-native-paper';
 import {createMaterialBottomTabNavigator} from 'react-native-paper/react-navigation';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -16,7 +11,6 @@ import lightTheme from './src/themes/light-theme.json';
 import WeatherScreen from './src/screens/WeatherScreen';
 import CoffeeScreen from './src/screens/CoffeeScreen';
 
-const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
 const Theme = {
@@ -40,7 +34,7 @@ class App extends Component {
               component={CoffeeScreen}
               options={{
                 title: 'Coffee',
-                tabBarLabel: 'Home',
+                tabBarLabel: 'Coffee',
                 tabBarIcon: ({color}) => (
                   <MaterialCommunityIcons
                     name="home"

@@ -6,9 +6,8 @@ export const makeAppStyles = (colors: any) =>
   StyleSheet.create({
     centerContainer: {
       flex: 1,
-      justifyContent: 'space-evenly',
+      justifyContent: 'center',
       alignItems: 'center',
-      padding: Spacing.large,
     },
     primaryButton: {
       alignItems: 'center',
