@@ -6,6 +6,7 @@ import {Spacing} from '../styles/spacing';
 import {Appbar} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import React from 'react';
+import data from '../data/coffee.json';
 
 const makeStyles = (colors: any) =>
   StyleSheet.create({
@@ -26,30 +27,14 @@ function CoffeeListScreen({navigation}) {
       </Appbar.Header>
 
       <FlatList
-        data={[
-          {
-            name: 'Odo Carbonic',
-            roaster: 'Gringo Nordic',
-            origin: 'Ethiopia',
-            region: 'Guji',
-          },
-          {
-            name: 'Uraga Carbonic',
-            roaster: 'Gringo Nordic',
-            origin: 'Ethiopia',
-            region: 'Guji',
-          },
-          {
-            name: 'Udaini Mocha',
-            roaster: 'Drop Coffee',
-            origin: 'Yemen',
-            region: 'Yemen',
-          },
-        ]}
+        data={data.coffee}
         renderItem={({item}) => (
           <CoffeeItem theme={theme} navigation={navigation} coffee={item} />
         )}
-        contentContainerStyle={{padding: Spacing.default}}
+        contentContainerStyle={{
+          padding: Spacing.default,
+          paddingBottom: Spacing.extraLarge,
+        }}
       />
     </View>
   );
