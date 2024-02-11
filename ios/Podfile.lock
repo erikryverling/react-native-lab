@@ -418,7 +418,10 @@ PODS:
   - RNScreens (3.22.0):
     - React-Core
     - React-RCTImage
-  - SocketRocket (0.6.0)
+  - RNVectorIcons (10.0.3):
+    - RCT-Folly (= 2021.07.22.00)
+    - React-Core
+  - SocketRocket (0.6.1)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -484,6 +487,7 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -575,6 +579,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNVectorIcons:
+    :path: "../node_modules/react-native-vector-icons"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -627,10 +633,11 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: c5c89f8f543842dd864b63ded1b0bbb9c9445328
   ReactCommon: dbfbe2f7f3c5ce4ce44f43f2fd0d5950d1eb67c5
   RNScreens: 68fd1060f57dd1023880bf4c05d74784b5392789
-  SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
+  RNVectorIcons: 64e6a523ac30a3241efa9baf1ffbcc5e76ff747a
+  SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: d56980c8914db0b51692f55533409e844b66133c
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 072f3ca5109f7f1640c434b951b35bec478ef176
+PODFILE CHECKSUM: 3b9f525173a63d75d0897be77daf1fb3dbe2e9ed
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2
