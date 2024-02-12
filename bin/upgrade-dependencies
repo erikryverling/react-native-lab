@@ -1,2 +1,4 @@
 #!/bin/sh
-npx react-native-upgrade
+yarn upgrade
+cd ios
+pod install --repo-update
