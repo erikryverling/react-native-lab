@@ -42,7 +42,7 @@ function CoffeeDetailsScreen({route, navigation}) {
         <View style={[styles.card]}>
           <View style={[styles.row]}>
             <Text style={[styles.rowLabel]} variant="bodyLarge">
-              Country:
+              Origin:
             </Text>
             <Text variant="bodyLarge">{coffee.origin}</Text>
           </View>

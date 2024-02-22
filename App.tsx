@@ -37,7 +37,7 @@ class App extends Component {
                 tabBarLabel: 'Coffee',
                 tabBarIcon: ({color}) => (
                   <MaterialCommunityIcons
-                    name="home"
+                    name="coffee-outline"
                     color={color}
                     size={this.menuItemSize}
                   />
