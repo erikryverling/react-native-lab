@@ -9,7 +9,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import lightTheme from './src/themes/light-theme.json';
 import WeatherScreen from './src/screens/WeatherScreen';
-import CoffeeScreen from './src/screens/CoffeeScreen';
+import CoffeesScreen from './src/screens/CoffeesScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -30,11 +30,11 @@ class App extends Component {
         <NavigationContainer>
           <Tab.Navigator>
             <Tab.Screen
-              name="Coffee"
-              component={CoffeeScreen}
+              name="Coffees"
+              component={CoffeesScreen}
               options={{
-                title: 'Coffee',
-                tabBarLabel: 'Coffee',
+                title: 'Coffees',
+                tabBarLabel: 'Coffees',
                 tabBarIcon: ({color}) => (
                   <MaterialCommunityIcons
                     name="coffee-outline"

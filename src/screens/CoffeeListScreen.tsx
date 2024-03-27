@@ -6,7 +6,7 @@ import {Spacing} from '../styles/spacing';
 import {Appbar} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import React from 'react';
-import data from '../data/coffee.json';
+import data from '../data/coffees.json';
 
 const makeStyles = (colors: any) =>
   StyleSheet.create({
@@ -27,7 +27,7 @@ function CoffeeListScreen({navigation}) {
       </Appbar.Header>
 
       <FlatList
-        data={data.coffee}
+        data={data.coffees}
         renderItem={({item}) => (
           <CoffeeItem theme={theme} navigation={navigation} coffee={item} />
         )}
