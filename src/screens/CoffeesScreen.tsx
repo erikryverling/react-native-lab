@@ -5,7 +5,7 @@ import CoffeeListScreen from './CoffeeListScreen';
 
 const Stack = createNativeStackNavigator();
 
-function CoffeeScreen() {
+function CoffeesScreen() {
   return (
     <Stack.Navigator initialRouteName="CoffeeList">
       <Stack.Screen
@@ -21,4 +21,4 @@ function CoffeeScreen() {
     </Stack.Navigator>
   );
 }
-export default CoffeeScreen;
+export default CoffeesScreen;
